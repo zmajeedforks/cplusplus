@@ -14,9 +14,15 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(fmt)
 
-add_executable(create_times create_times.cpp)
+add_executable(chrono_afraid_to_ask chrono_afraid_to_ask.cpp)
 
-target_compile_options(create_times PRIVATE -Wall -Werror -Wextra -O0 -ggdb3 -gdwarf-5 -std=c++23)
+target_compile_options(chrono_afraid_to_ask PRIVATE -Wall -Werror -Wextra -O0 -ggdb3 -gdwarf-5 -std=c++23)
+target_link_options(chrono_afraid_to_ask PRIVATE -export-dynamic)
 
-target_link_libraries(create_times fmt)
+target_link_libraries(chrono_afraid_to_ask fmt)
+# target_link_libraries(chrono_afraid_to_ask)
 
+# create dynamic targets example_0, example_1, ..., example_100
+foreach(i RANGE 0 100)
+  add_custom_target("example_${i}" COMMAND ${CMAKE_CURRENT_BINARY_DIR}/chrono_afraid_to_ask "example_${i}" DEPENDS chrono_afraid_to_ask)
+endforeach()
